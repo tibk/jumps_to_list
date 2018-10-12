@@ -1,0 +1,6 @@
+flake8
+flake8-import-order==0.14.2
+gitpython
+pep8-naming
+pytest
+pytest-cov
