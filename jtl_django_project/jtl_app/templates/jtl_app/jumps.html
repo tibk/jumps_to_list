@@ -1,0 +1,10 @@
+jtl_app/templates/jtl_app/jumps.html
+{% if jump_list %}
+<ul>
+  {% for jump in jump_list %}
+  <li>{{ jump.comments }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No jumps performed yet!</p>
+{% endif %}

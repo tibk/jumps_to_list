@@ -1,0 +1,10 @@
+jtl_app/templates/jtl_app/jumpers.html
+{% if jumper_list %}
+    <ul>
+    {% for jumper in jumper_list %}
+        <li><a href="/jtl_app/jumper/{{ jumper.id }}/">{{ jumper.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No jumpers found.</p>
+    {% endif %}
