@@ -41,28 +41,43 @@ def insert_jumps(file_path, dsn):
     jumper_stmt = db.sql.expression.select([jumper_table.c.id]).where(jumper_table.c.name == jumper_name)
     jumper_id = conn.execute(jumper_stmt).fetchone().id
 
-    import pdb; pdb.set_trace()
     for row in reader:
         try:
             spot_stmt = db.sql.expression.select([spot_table.c.id]).where(spot_table.c.name == row['Lieu'])
             spot_id = conn.execute(spot_stmt).fetchone().id
         except:
             spot_stmt = db.sql.expression.insert(spot_table).values(name=row['Lieu'], location='France', height='100').returning(spot_table.c.id)
+            spot_id = conn.execute(spot_stmt).fetchone().id
 
-        suit_stmt = db.sql.expression.insert(suit_table).values(name=row['Combi'], brand='', kind='')
-        jumpkind_stmt = db.sql.expression.insert(jumpkind_table).values(name=row['Type'])
-        jump_stmt = db.sql.expression.insert(jump_table).values(name=row[''], jumper_id='', spot_id='', suit_id='', jump_kind_id='', comments=row['Remarque'])
         try:
-            conn.execute(insert_stmt)
-            print('insert: ', row['Lieu'])
+            suit_stmt = db.sql.expression.select([suit_table.c.id]).where(suit_table.c.name == row['Combi'])
+            suit_id = conn.execute(suit_stmt).fetchone().id
+        except:
+            suit_stmt = db.sql.expression.insert(suit_table).values(name=row['Combi'], brand='', kind='').returning(suit_table.c.id)
+            suit_id = conn.execute(suit_stmt).fetchone().id
+
+        try:
+            jumpkind_stmt = db.sql.expression.select([jumpkind_table.c.id]).where(jumpkind_table.c.kind == row['Type'])
+            jumpkind_id = conn.execute(jumpkind_stmt).fetchone().id
+        except:
+            jumpkind_stmt = db.sql.expression.insert(jumpkind_table).values(kind=row['Type']).returning(jumpkind_table.c.id)
+            jumpkind_id = conn.execute(jumpkind_stmt).fetchone().id
+
+        jump_stmt = db.sql.expression.insert(jump_table).values(
+            date=row['Date'],
+            jumper_id=jumper_id,
+            spot_id=spot_id,
+            suit_id=suit_id,
+            jump_kind_id=jumpkind_id,
+            number=row['Numéro'],
+            comments=row['Remarque'],
+        ).returning(jump_table.c.id)
+        try:
+            jump_id = conn.execute(jump_stmt).fetchone().id
+            jump_msg = 'Inserted jump number: {} with id: {}'.format(row['Numéro'], jump_id)
+            print(jump_msg)
         except db.exc.IntegrityError as e:
             print(e)
 
 if __name__=='__main__':
     main()
-# [('Date', '2018-04-02'),
-#              ('Numéro', '1'),
-#              ('Type', 'PCA'),
-#              ('Combi', ''),
-#              ('Lieu', 'Kanfanar Bridge '),
-#              ('Remarque', '')]

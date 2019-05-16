@@ -1,6 +1,6 @@
 import os
 import sys
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -50,7 +50,9 @@ class Jump(Base):
     spot_id = Column(Integer, ForeignKey('spot.id'))
     suit_id = Column(Integer, ForeignKey('suit.id'))
     jump_kind_id = Column(Integer, ForeignKey('jump_kind.id'))
+    number = Column(Integer, nullable=False)
     comments = Column(String(500))
+    UniqueConstraint(jumper_id, number, name='jump_number_unique_per_jumper')
 
 # Create an engine that stores data in the local directory's
 # sqlalchemy_example.db file.
