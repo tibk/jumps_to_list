@@ -88,7 +88,15 @@ DATABASES = {
         'PASSWORD': os.environ['DJANGO_DB_PASS'],
         'HOST': '127.0.0.1',
         'PORT': '5432',
-    }
+    },
+    'base_statistics': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'base_statistics',
+        'USER': 'tkarrer',
+        'PASSWORD': os.environ['BASE_STATISTICS_DB_PASS'],
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    },
 }
 
 
