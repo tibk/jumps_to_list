@@ -1,10 +1,22 @@
-jtl_app/templates/jtl_app/jumps.html
-{% if jump_list %}
-<ul>
-  {% for jump in jump_list %}
-  <li>{{ jump.comments }}</li>
-  {% endfor %}
-</ul>
-{% else %}
-<p>No jumps performed yet!</p>
-{% endif %}
+<table>
+  {% if jump_list %}
+    <tr>
+      <td>date</td>
+      <td>number</td>
+      <td>suit_id</td>
+      <td>comments</td>
+    </tr>
+    {% for jump in jump_list %}
+    <tr>
+      <td>{{ jump.date }}</td>
+      <td>{{ jump.number }}</td>
+      <td>{{ jump.suit_id }}</td>
+      <td>{{ jump.comments }}</td>
+    </tr>
+    {% endfor %}
+  {% else %}
+    <tr>
+      No jumps performed yet!
+    </tr>
+    {% endif %}
+</table>
