@@ -24,8 +24,10 @@ class JumpeKind(models.Model):
 class Jump(models.Model):
     __tablename__ = 'jump'
     date = models.DateTimeField('jump date')
-    jumper_id = models.ForeignKey(Jumper, on_delete=models.CASCADE)
-    spot_id = models.ForeignKey(Spot, on_delete=models.CASCADE)
-    suit_id = models.ForeignKey(Suit, on_delete=models.CASCADE)
-    jump_kind_id = models.ForeignKey(JumpeKind, on_delete=models.CASCADE)
+    number = models.IntegerField()
+    jumper_id = models.ForeignKey(Jumper, on_delete=models.CASCADE, db_column='jumper_id')
+    spot_id = models.ForeignKey(Spot, on_delete=models.CASCADE, db_column='spot_id')
+    suit_id = models.ForeignKey(Suit, on_delete=models.CASCADE, db_column='suit_id')
+    jump_kind_id = models.ForeignKey(JumpeKind, on_delete=models.CASCADE, db_column='jump_kind_id')
     comments = models.CharField(max_length=500)
+    #UniqueConstraint(fields=['jumper_id', 'number'], name='jump_number_unique_per_jumper')

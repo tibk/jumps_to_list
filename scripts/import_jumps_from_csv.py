@@ -32,11 +32,11 @@ def insert_jumps(file_path, dsn):
     conn = engine.connect()
     metadata = db.MetaData()
 
-    jumper_table = db.Table('jumper', metadata, autoload=True, autoload_with=engine)
-    spot_table = db.Table('spot', metadata, autoload=True, autoload_with=engine)
-    suit_table = db.Table('suit', metadata, autoload=True, autoload_with=engine)
-    jumpkind_table = db.Table('jump_kind', metadata, autoload=True, autoload_with=engine)
-    jump_table = db.Table('jump', metadata, autoload=True, autoload_with=engine)
+    jumper_table = db.Table('jtl_app_jumper', metadata, autoload=True, autoload_with=engine)
+    spot_table = db.Table('jtl_app_spot', metadata, autoload=True, autoload_with=engine)
+    suit_table = db.Table('jtl_app_suit', metadata, autoload=True, autoload_with=engine)
+    jumpkind_table = db.Table('jtl_app_jump_kind', metadata, autoload=True, autoload_with=engine)
+    jump_table = db.Table('jtl_app_jump', metadata, autoload=True, autoload_with=engine)
 
     jumper_stmt = db.sql.expression.select([jumper_table.c.id]).where(jumper_table.c.name == jumper_name)
     jumper_id = conn.execute(jumper_stmt).fetchone().id
