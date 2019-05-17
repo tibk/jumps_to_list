@@ -2,15 +2,17 @@
   {% if jump_list %}
     <tr>
       <td>date</td>
-      <td>number</td>
-      <td>suit_id</td>
+      <td>#</td>
+      <td>suit_name</td>
+      <td>spot_name</td>
       <td>comments</td>
     </tr>
     {% for jump in jump_list %}
     <tr>
       <td>{{ jump.date }}</td>
       <td>{{ jump.number }}</td>
-      <td>{{ jump.suit_id }}</td>
+      <td>{{ jump.suit_id.name }}</td>
+      <td>{{ jump.spot_id.name }}</td>
       <td>{{ jump.comments }}</td>
     </tr>
     {% endfor %}
