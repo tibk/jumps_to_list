@@ -2,7 +2,6 @@ import argparse
 import csv
 
 import sqlalchemy as db
-from psycopg2.errors import UniqueViolation
 
 
 def main():
@@ -20,6 +19,7 @@ def main():
     args = parser.parse_args()
 
     insert_jumps(args.file_path, args.dsn)
+
 
 def insert_jumps(file_path, dsn):
     reader = csv.DictReader(
@@ -45,21 +45,21 @@ def insert_jumps(file_path, dsn):
         try:
             spot_stmt = db.sql.expression.select([spot_table.c.id]).where(spot_table.c.name == row['Lieu'])
             spot_id = conn.execute(spot_stmt).fetchone().id
-        except:
+        except AttributeError:
             spot_stmt = db.sql.expression.insert(spot_table).values(name=row['Lieu'], location='France', height='100').returning(spot_table.c.id)
             spot_id = conn.execute(spot_stmt).fetchone().id
 
         try:
             suit_stmt = db.sql.expression.select([suit_table.c.id]).where(suit_table.c.name == row['Combi'])
             suit_id = conn.execute(suit_stmt).fetchone().id
-        except:
+        except AttributeError:
             suit_stmt = db.sql.expression.insert(suit_table).values(name=row['Combi'], brand='', kind='').returning(suit_table.c.id)
             suit_id = conn.execute(suit_stmt).fetchone().id
 
         try:
             jumpkind_stmt = db.sql.expression.select([jumpkind_table.c.id]).where(jumpkind_table.c.kind == row['Type'])
             jumpkind_id = conn.execute(jumpkind_stmt).fetchone().id
-        except:
+        except AttributeError:
             jumpkind_stmt = db.sql.expression.insert(jumpkind_table).values(kind=row['Type']).returning(jumpkind_table.c.id)
             jumpkind_id = conn.execute(jumpkind_stmt).fetchone().id
 
@@ -79,5 +79,6 @@ def insert_jumps(file_path, dsn):
         except db.exc.IntegrityError as e:
             print(e)
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     main()

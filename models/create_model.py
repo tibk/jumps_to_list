@@ -1,10 +1,13 @@
-import os
-import sys
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, UniqueConstraint
+from sqlalchemy import (
+    Column,
+    create_engine,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+    UniqueConstraint
+)
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
-
 
 Base = declarative_base()
 
@@ -54,10 +57,10 @@ class Jump(Base):
     comments = Column(String(500))
     UniqueConstraint(jumper_id, number, name='jtl_app_jump_number_unique_per_jumper')
 
+
 # Create an engine that stores data in the local directory's
 # sqlalchemy_example.db file.
 engine = create_engine('postgresql://tkarrer@localhost/base_statistics')
-
 
 # Create all tables in the engine. This is equivalent to "Create Table"
 # statements in raw SQL.
