@@ -9,7 +9,7 @@ def index(request):
 
 
 def jumpers(request):
-    jumper_list = Jumper.objects.using('base_statistics').order_by('name')
+    jumper_list = Jumper.objects.using('default').order_by('name')
     context = {
         'jumper_list': jumper_list,
     }
@@ -17,7 +17,7 @@ def jumpers(request):
 
 
 def jumps(request, jumper_id):
-    jump_list = Jump.objects.using('base_statistics').filter(jumper_id_id=jumper_id)
+    jump_list = Jump.objects.using('default').filter(jumper_id_id=jumper_id)
     context = {
         'jump_list': jump_list,
     }

@@ -35,7 +35,7 @@ def insert_jumps(file_path, dsn):
     jumper_table = db.Table('jtl_app_jumper', metadata, autoload=True, autoload_with=engine)
     spot_table = db.Table('jtl_app_spot', metadata, autoload=True, autoload_with=engine)
     suit_table = db.Table('jtl_app_suit', metadata, autoload=True, autoload_with=engine)
-    jumpkind_table = db.Table('jtl_app_jump_kind', metadata, autoload=True, autoload_with=engine)
+    jump_kind_table = db.Table('jtl_app_jumpkind', metadata, autoload=True, autoload_with=engine)
     jump_table = db.Table('jtl_app_jump', metadata, autoload=True, autoload_with=engine)
 
     jumper_stmt = db.sql.expression.select([jumper_table.c.id]).where(jumper_table.c.name == jumper_name)
@@ -57,18 +57,18 @@ def insert_jumps(file_path, dsn):
             suit_id = conn.execute(suit_stmt).fetchone().id
 
         try:
-            jumpkind_stmt = db.sql.expression.select([jumpkind_table.c.id]).where(jumpkind_table.c.kind == row['Type'])
-            jumpkind_id = conn.execute(jumpkind_stmt).fetchone().id
+            jump_kind_stmt = db.sql.expression.select([jump_kind_table.c.id]).where(jump_kind_table.c.kind == row['Type'])
+            jump_kind_id = conn.execute(jump_kind_stmt).fetchone().id
         except AttributeError:
-            jumpkind_stmt = db.sql.expression.insert(jumpkind_table).values(kind=row['Type']).returning(jumpkind_table.c.id)
-            jumpkind_id = conn.execute(jumpkind_stmt).fetchone().id
+            jump_kind_stmt = db.sql.expression.insert(jump_kind_table).values(kind=row['Type']).returning(jump_kind_table.c.id)
+            jump_kind_id = conn.execute(jump_kind_stmt).fetchone().id
 
         jump_stmt = db.sql.expression.insert(jump_table).values(
             date=row['Date'],
             jumper_id=jumper_id,
             spot_id=spot_id,
             suit_id=suit_id,
-            jump_kind_id=jumpkind_id,
+            jump_kind_id=jump_kind_id,
             number=row['Numéro'],
             comments=row['Remarque'],
         ).returning(jump_table.c.id)
