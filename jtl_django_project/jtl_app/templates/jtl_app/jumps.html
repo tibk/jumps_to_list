@@ -1,26 +1,62 @@
-<table>
-  {% if jump_list %}
-    <tr>
-      <td>date</td>
-      <td>#</td>
-      <td>kind</td>
-      <td>suit_name</td>
-      <td>spot_name</td>
-      <td>comments</td>
-    </tr>
-    {% for jump in jump_list %}
-    <tr>
-      <td>{{ jump.date }}</td>
-      <td>{{ jump.number }}</td>
-      <td>{{ jump.jump_kind_id.kind }}</td>
-      <td>{{ jump.suit_id.name }}</td>
-      <td>{{ jump.spot_id.name }}</td>
-      <td>{{ jump.comments }}</td>
-    </tr>
-    {% endfor %}
-  {% else %}
-    <tr>
-      No jumps performed yet!
-    </tr>
-    {% endif %}
-</table>
+<html lang = "en">
+   <head>
+      <!-- Meta tags -->
+      <meta charset = "utf-8">
+      <meta name = "viewport" content = "width=device-width, initial-scale = 1, shrink-to-fit = no">
+
+      <!-- Bootstrap CSS -->
+      <link rel = "stylesheet"
+      href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+         integrity =" sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+         crossorigin = "anonymous">
+
+      <title>Bootstrap 4 Example</title>
+   </head>
+
+   <body>
+      <table>
+        {% if jump_list %}
+        <h2>Hello, mate, here is the jump list:</h2>
+        <div class="row">
+          <div class="col-sm-2" style="background-color:lavender;"><h4>Date</h4></div>
+          <div class="col-sm-1" style="background-color:lavenderblush;"><h4>#</h4></div>
+          <div class="col-sm-2" style="background-color:lavender;"><h4>Kind</h4></div>
+          <div class="col-sm-2" style="background-color:lavenderblush;"><h4>Suit</h4></div>
+          <div class="col-sm-2" style="background-color:lavender;"><h4>Spot</h4></div>
+          <div class="col-sm-3" style="background-color:lavenderblush;"><h4>Comments</h4></div>
+        </div>
+      </div>
+
+        {% for jump in jump_list %}
+        <div class="row">
+          <div class="col-sm-2" style="background-color:lavender;">{{ jump.date }}</div>
+          <div class="col-sm-1" style="background-color:lavenderblush;">{{ jump.number }}</div>
+          <div class="col-sm-2" style="background-color:lavender;">{{ jump.jump_kind_id.kind }}</div>
+          <div class="col-sm-2" style="background-color:lavenderblush;">{{ jump.suit_id.name }}</div>
+          <div class="col-sm-2" style="background-color:lavender;">{{ jump.spot_id.name }}</div>
+          <div class="col-sm-3" style="background-color:lavenderblush;">{{ jump.comments }}</div>
+        </div>
+        {% endfor %}
+        {% else %}
+          <h2>Sorry mate, but this jumper hasnt performed any jump.</h2>
+        {% endif %}
+      </table>
+
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src = "https://code.jquery.com/jquery-3.3.1.slim.min.js"
+         integrity = "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+         crossorigin = "anonymous">
+      </script>
+
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+         integrity = "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+         crossorigin = "anonymous">
+      </script>
+
+      <script src = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+         integrity = "sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+         crossorigin = "anonymous">
+      </script>
+
+   </body>
+</html>
